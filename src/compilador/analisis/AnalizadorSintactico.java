@@ -20,7 +20,7 @@ public class AnalizadorSintactico {
             this.token = this.tokenRC.get(0).getToken();
             this.tipo = this.tokenRC.get(0).getTipo();
         } catch (Exception e) {
-            MainView.textAreaLog.append("El archivo está vacío");
+            //MainView.textAreaLog.append("El archivo está vacío");
         }
         analizar();
     }
@@ -278,13 +278,13 @@ public class AnalizadorSintactico {
                     + tipo + " **";
         }
 
-        MainView.textAreaLog.append(tipo);
+        //MainView.textAreaLog.append(tipo);
     }
 
     public void error() {
-        MainView.textAreaLog.append("Error en la sintaxis, con el siguiente token ** " + token + " ** en linea ** "
+        /*MainView.textAreaLog.append("Error en la sintaxis, con el siguiente token ** " + token + " ** en linea ** "
                 + tokenRC.get(contando).getRenglon() + " **, No. de token ** " + tokenRC.get(contando).getColumna()
-                + " **");
+                + " **");*/
     }
 
     public boolean checarSimbolosLogicos() {

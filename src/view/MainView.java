@@ -14,7 +14,7 @@ public class MainView  extends JFrame{
     private JPanel panel1;
     private JTextArea textAreaCode;
     private JTextArea textAreaIdentificador;
-    public static JTextArea textAreaLog;
+    public  JTextArea textAreaLog;
     private JButton btnAnalizar;
 
     public MainView() {
@@ -62,7 +62,7 @@ public class MainView  extends JFrame{
     private void imprimirIdentificadores(ArrayList<Simbolo> listaTablaSimbolos){
         listaTablaSimbolos.forEach(s-> {
             textAreaIdentificador.append("Identificador: " + s.getIdentificador() + "\n");
-            textAreaIdentificador.append("Tipo Datap: " + s.getTipoDato() + "\n");
+            textAreaIdentificador.append("Tipo Dato: " + s.getTipoDato() + "\n");
             textAreaIdentificador.append("Posición: " + s.getPosicion() + "\n");
             textAreaIdentificador.append("Valor: " + s.getValor() + "\n\n");
         });

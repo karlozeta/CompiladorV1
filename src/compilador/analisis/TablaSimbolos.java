@@ -74,7 +74,7 @@ public class TablaSimbolos {
                     continue;
                 }
 
-                if (!esExpresion && !(this.tokenRC.get(i - 1).getToken().equals("int") || this.tokenRC.get(i - 1).getToken().equals("boolean"))) {
+                if (!esExpresion && !(this.tokenRC.get(i - 1).getToken().equals("int") || this.tokenRC.get(i - 1).getToken().equals("boolean")|| this.tokenRC.get(i - 1).getToken().equals("String"))) {
                     simbolo.setTipoDato("Indefinido");
                     simbolo.setValor("-");
                 }
