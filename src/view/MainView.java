@@ -15,11 +15,7 @@ public class MainView  extends JFrame{
     private JPanel panel1;
     private JTextArea textAreaCode;
     private JTextArea textAreaIdentificador;
-<<<<<<< HEAD
     public JTextArea textAreaLog;
-=======
-    public  JTextArea textAreaLog;
->>>>>>> 285eb218dba6d77e881dea2fc2416f45960196b1
     private JButton btnAnalizar;
 
     public MainView() {
