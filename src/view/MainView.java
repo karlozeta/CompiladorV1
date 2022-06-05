@@ -3,6 +3,7 @@ package view;
 import compilador.analisis.AnalisisLexico;
 import compilador.analisis.AnalisisSemantico;
 import compilador.analisis.TablaSimbolos;
+import compilador.codigointermedio.GeneracionCodigoIntermedio;
 import compilador.models.Simbolo;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class MainView  extends JFrame{
     private JPanel panel1;
     private JTextArea textAreaCode;
     private JTextArea textAreaIdentificador;
-    public static JTextArea textAreaLog;
+    public JTextArea textAreaLog;
     private JButton btnAnalizar;
 
     public MainView() {
@@ -57,6 +58,10 @@ public class MainView  extends JFrame{
         }
 
         imprimirIdentificadores(tablaSimbolos.getListaSimbolos());
+        if (!analizadorLexico.getHayErrores() && !(analizadorSemantico.getErroresSemanticos().size() > 0)){
+            new GeneracionCodigoIntermedio(tablaSimbolos.getListaSimbolos());
+        }
+
     }
 
     private void imprimirIdentificadores(ArrayList<Simbolo> listaTablaSimbolos){
