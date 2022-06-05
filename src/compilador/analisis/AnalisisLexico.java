@@ -49,7 +49,7 @@ public class AnalisisLexico {
             linea = espacios(linea);
             //Se crea un arreglo por cada palabra de la linea separada por espacios
             tokenizer = new StringTokenizer(linea);
-            while (tokenizer.hasMoreTokens()) {//DENTRO DE ESTE WHILE, EN EL METODO analizadorLexico SE MANDA CADA TOKEN, CADA PALABRA
+            while (tokenizer.hasMoreTokens()) {
                 columna++;
                 token = tokenizer.nextToken();
                 analizadorLexico(token);
@@ -63,8 +63,8 @@ public class AnalisisLexico {
         if (token.equals("==") || token.equals(">=") || token.equals("<=") || token.equals("!=")) {
             return;
         }
-        String cadenas[] = {"class", "public", "private", "while", "int", "boolean","String","double", "{", "}", "=", ";", "<", ">", //12... Aunque no se usa como tal el "!" solo, sirve para que no lance error
-            "==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if"};		//14   total = 26, de 0 al 25 + nums e id --> 0 - 27
+        String cadenas[] = {"class", "public", "private", "while", "int", "boolean","String","double", "{", "}", "=", ";", "<", ">",
+            "==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if"};
         int tipo = -1;
         for (int i = 0; i < cadenas.length; i++) {
             if (token.equals(cadenas[i])) {
