@@ -1,6 +1,7 @@
 package compilador.codigointermedio;
 
 import compilador.models.Cuadruplo;
+import compilador.models.ExpresionAssembly;
 import compilador.models.Simbolo;
 import view.CodigoIntermedio;
 
@@ -10,8 +11,6 @@ import java.util.List;
 import java.util.Random;
 
 public class GeneracionCodigoIntermedio {
-
-    private List<String> lista = new ArrayList<>();
 
     private class Expresion {
         public String id;
@@ -36,6 +35,7 @@ public class GeneracionCodigoIntermedio {
     ArrayList<Simbolo> listaSimbolos;
     ArrayList<Expresion> listaExpresiones;
     ArrayList<Cuadruplo> listaCuadruplos;
+    List<String> lista = new ArrayList<>();
 
     public GeneracionCodigoIntermedio(ArrayList<Simbolo> listaSimbolos) {
         this.listaSimbolos = listaSimbolos;
@@ -47,7 +47,7 @@ public class GeneracionCodigoIntermedio {
         listaExpresiones = new ArrayList<>();
         for (Simbolo simbolo : listaSimbolos) {
             String expresion = simbolo.getValor();
-            // Cuádruplos: Expresión de 4 elementos
+            // Cuádruplos
             if (expresion.split("\\s+").length >= 3) {
                 listaExpresiones.add(new Expresion(simbolo.getIdentificador(), expresion));
             }
@@ -71,7 +71,7 @@ public class GeneracionCodigoIntermedio {
                     i = -1;
                 } else if (elementos.size() == 1) {
                     listaCuadruplos.add(new Cuadruplo(
-                            ex.id + " = ",  // Operador
+                            ex.id,  // Operador
                             elementos.get(i),       // Operador1
                             "",            // Operador2
                             ""              // Resultado
@@ -80,10 +80,33 @@ public class GeneracionCodigoIntermedio {
 
             }
             cuerpoImpresion();
+            generarCodigoObjeto();
         }
+
         CodigoIntermedio codigoIntermedio = new CodigoIntermedio(lista);
         codigoIntermedio.setSize(700, 700);
         codigoIntermedio.setVisible(true);
+    }
+
+    private void generarCodigoObjeto() {
+        cabeceraAssembly();
+        listaCuadruplos.forEach(cuadruplo -> {
+            if (cuadruplo.getOperador().equals("*")) {
+                lista.add(ExpresionAssembly.MOV + " " + cuadruplo.getOperador1() + ", " + cuadruplo.getResultado() + "\n");
+                lista.add(ExpresionAssembly.MULT + " " + cuadruplo.getOperador2() + ", " + cuadruplo.getResultado() + "\n");
+            } else if (cuadruplo.getOperador().equals("/")) {
+                lista.add(ExpresionAssembly.MOV + " " + cuadruplo.getOperador1() + ", " + cuadruplo.getResultado() + "\n");
+                lista.add(ExpresionAssembly.DIV + " " + cuadruplo.getOperador2() + ", " + cuadruplo.getResultado() + "\n");
+            } else if (cuadruplo.getOperador().equals("+")) {
+                lista.add(ExpresionAssembly.MOV + " " + cuadruplo.getOperador1() + ", " + cuadruplo.getResultado() + "\n");
+                lista.add(ExpresionAssembly.ADD + " " + cuadruplo.getOperador2() + ", " + cuadruplo.getResultado() + "\n");
+            } else if (cuadruplo.getOperador().equals("-")) {
+                lista.add(ExpresionAssembly.MOV + " " + cuadruplo.getOperador1() + ", " + cuadruplo.getResultado() + "\n");
+                lista.add(ExpresionAssembly.SUB + " " + cuadruplo.getOperador2() + ", " + cuadruplo.getResultado() + "\n");
+            } else {
+                lista.add(ExpresionAssembly.MOV + " " + cuadruplo.getOperador() + ", " + cuadruplo.getOperador1() + "\n");
+            }
+        });
     }
 
     private String generarTmp(String operador) {
@@ -115,9 +138,13 @@ public class GeneracionCodigoIntermedio {
 
     }
 
+    private void cabeceraAssembly(){
+        lista.add("\n---------- ENSAMBLADOR -----------------------------------------------------\n");
+    }
+
     private void cabeceraImpresion(Expresion ex){
         lista.add("---------- Expresión -----------------------------------------------------\n");
-        lista.add(ex.id + " = " + ex.expresion);
+        lista.add(ex.id + " = " + ex.expresion + "\n");
         lista.add("--------------------------------------------------------------------------\n");
         lista.add(String.format("%15s %20s %20s %20s\n", "Operador", "Operando1", "Operando2", "Resultado"));
         lista.add("--------------------------------------------------------------------------\n");
@@ -127,7 +154,7 @@ public class GeneracionCodigoIntermedio {
         for (Cuadruplo cuadruplo : listaCuadruplos) {
             lista.add(String.format("%15s %20s %20s %20s\n",cuadruplo.getOperador() , cuadruplo.getOperador1(), cuadruplo.getOperador2(), cuadruplo.getResultado()));
         }
-        lista.add("--------------------------------------------------------------------------\n");
+        lista.add("--------------------------------------------------------------------------\n\n");
     }
 
 }
