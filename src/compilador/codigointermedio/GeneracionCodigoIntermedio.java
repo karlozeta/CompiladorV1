@@ -143,7 +143,7 @@ public class GeneracionCodigoIntermedio {
     }
 
     private void cabeceraImpresion(Expresion ex){
-        lista.add("---------- Expresión -----------------------------------------------------\n");
+        lista.add("\n---------- Expresión -----------------------------------------------------\n");
         lista.add(ex.id + " = " + ex.expresion + "\n");
         lista.add("--------------------------------------------------------------------------\n");
         lista.add(String.format("%15s %20s %20s %20s\n", "Operador", "Operando1", "Operando2", "Resultado"));
